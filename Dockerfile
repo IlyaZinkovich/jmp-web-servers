@@ -46,5 +46,10 @@ RUN sed -i '1a\
 
 ADD create_tomcat_admin_user.sh /create_tomcat_admin_user.sh
 ADD run.sh /run.sh
+
+RUN apt-get update && apt-get install -y dos2unix
+
+RUN dos2unix /run.sh && dos2unix /create_tomcat_admin_user.sh && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*
+
 RUN chmod +x /*.sh
 CMD ["/run.sh"]
